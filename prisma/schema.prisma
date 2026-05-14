@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum JobRunStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model JobRun {
+  id             String       @id @default(cuid())
+  startedAt      DateTime     @default(now())
+  finishedAt     DateTime?
+  status         JobRunStatus @default(RUNNING)
+  itemsCreated   Int          @default(0)
+  itemsUpdated   Int          @default(0)
+  errorMessage   String?
+  trigger        String       @default("scheduled")
+  items          Item[]
+
+  @@index([startedAt])
+}
+
+model Item {
+  id          String   @id @default(cuid())
+  externalId  String   @unique
+  title       String
+  description String?
+  sourceUrl   String?
+  fetchedAt   DateTime @default(now())
+  jobRunId    String?
+  jobRun      JobRun?  @relation(fields: [jobRunId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([fetchedAt])
+}
