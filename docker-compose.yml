@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: scrape
       POSTGRES_DB: scrape
     ports:
-      - "5433:5432"
+      - "5436:5432"
     volumes:
       - scrape_pg:/var/lib/postgresql/data
 
@@ -15,10 +15,10 @@ services:
     build: .
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3002:3000"
     environment:
       DATABASE_URL: postgresql://scrape:scrape@db:5432/scrape
-      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NEXT_PUBLIC_APP_URL: http://localhost:3002
       APP_BASE_URL: http://web:3000
     depends_on:
       - db

@@ -13,6 +13,13 @@
 
 API реализованы **только в Next** (route handlers), отдельного NestJS-сервиса нет.
 
+## Порты (локально)
+
+| Сервис | Порт |
+|--------|------|
+| PostgreSQL (Docker) | **5436** |
+| Веб (Docker) | **3002** |
+
 ## Быстрый старт (Docker)
 
 1. Скопируйте переменные: `cp .env.example .env` (при необходимости поправьте порты).
@@ -22,7 +29,7 @@ API реализованы **только в Next** (route handlers), отдел
 docker compose up -d --build db web
 ```
 
-3. Откройте http://localhost:3000 — миграции применяются при старте контейнера `web`.
+3. Откройте http://localhost:3002 — миграции применяются при старте контейнера `web`.
 
 Опционально — воркер по cron (каждые 2 минуты, источник по умолчанию — фикстуры):
 
@@ -53,7 +60,7 @@ npm run dev
 4. Запустить ingestion из фикстур:
 
 ```bash
-curl -X POST http://localhost:3000/api/pipeline/run ^
+curl -X POST http://localhost:3002/api/pipeline/run ^
   -H "Content-Type: application/json" ^
   -d "{\"source\":\"fixture\"}"
 ```
@@ -63,7 +70,7 @@ curl -X POST http://localhost:3000/api/pipeline/run ^
 5. Запустить ingestion из внутреннего RSS:
 
 ```bash
-curl -X POST http://localhost:3000/api/pipeline/run ^
+curl -X POST http://localhost:3002/api/pipeline/run ^
   -H "Content-Type: application/json" ^
   -d "{\"source\":\"mock-feed\"}"
 ```
