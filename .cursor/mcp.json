@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "scrape-postgres": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://scrape:scrape@localhost:5433/scrape"
+      ]
+    }
+  }
+}
